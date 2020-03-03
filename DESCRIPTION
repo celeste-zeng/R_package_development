@@ -1,0 +1,13 @@
+Package: STAT302package
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Siyue",
+           family = "Zeng",
+           role = c("aut", "cre"),
+           email = "czeng@uw.edu")
+Description: This pakage shows how to make a build a pakage for STAT302 at UW.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
