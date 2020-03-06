@@ -11,11 +11,11 @@
 #'  and cv_err: a numeric with the cross-validation misclassification error;
 #'
 #'  @examples
-#'  my_knn_cv(train = iris[, -5], cl = iris$Species, k_nn = 5, k_cv = 5)
-#'  my_knn_cv(train = USArrests[, -5], cl = USArrests$Rape, k_nn = 1, k_cv = 5)
+#'  my_knn_cv(train = my_iris[, -5], cl = my_iris$Species, k_nn = 5, k_cv = 5)
+#'
+#' @import class
 #'
 #'  @export
-
 my_knn_cv <- function(train, cl, k_nn, k_cv) {
   folds <- sample(rep(1 : k_cv, length = nrow(train)))
   err <- c()

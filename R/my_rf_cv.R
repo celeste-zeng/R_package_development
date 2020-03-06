@@ -8,7 +8,8 @@
 #'
 #'  @examples
 #'  my_rf_cv(k = 5)
-#'  my_rf_cv(k = 1)
+#'
+#'  @import randomForest
 #'
 #'  @export
 
