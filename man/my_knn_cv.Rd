@@ -21,5 +21,7 @@ This function performs a k-Nearest Neighbors Cross-Validation in R
  @examples
  my_knn_cv(train = my_iris[, -5], cl = my_iris$Species, k_nn = 5, k_cv = 5)
 
+ @import class
+
  @export
 }

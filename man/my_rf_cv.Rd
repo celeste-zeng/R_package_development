@@ -17,5 +17,7 @@ This function performs a Random Forest Cross-Validation in R
  @examples
  my_rf_cv(k = 5)
 
+ @import randomForest
+
  @export
 }
