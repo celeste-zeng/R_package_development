@@ -15,6 +15,8 @@ This function performs a k-Nearest Neighbors Cross-Validation in R
  @param k_nn integer representing the number of neighbors
  @param k_cv integer representing the number of folds
 
+ @keywords prediction
+
  @return a list with objects, which has class: a vector of the predicted class Y_i for all observations,
  and cv_err: a numeric with the cross-validation misclassification error;
 

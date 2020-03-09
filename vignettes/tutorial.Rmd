@@ -1,9 +1,8 @@
 ---
 title: "Project 3: STAT302package Tutorial"
-author: "Siyue Zeng"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{STAT302package Tutorial}
+  %\VignetteIndexEntry{Project 3: STAT302package Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,4 +16,23 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(STAT302package)
+```
+A tutorial for the function my_knn_cv in the STAT302packgePredict 
+Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
+
+
+```{r}
+tu_knn <- my_knn_cv(train = my_gapminder[, 3 : 4], 
+          cl = my_gapminder$continent, k_nn = 10, k_cv = 5)
+```
+
+```{r}
+k_vector <- c(2, 5, 10, 100)
+tu_rf <- matrix(NA, nrow = 30, ncol = 4)
+for (i in 1 : length(k_vector)) {
+  for (k in 1 : 30) {
+    tu_rf[k, i] <- my_rf_cv(k = k_vector[i])
+  }
+}
+tu_rf
 ```

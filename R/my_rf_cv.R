@@ -4,6 +4,8 @@
 #'
 #'  @param k number of folds
 #'
+#'  @keywords inference
+#'
 #'  @return a numeric with the cross-validation error;
 #'
 #'  @examples
@@ -12,7 +14,6 @@
 #'  @import randomForest
 #'
 #'  @export
-
 my_rf_cv <- function(k) {
   train <- my_gapminder
   folds <- sample(rep(1:k, length = nrow(train)))

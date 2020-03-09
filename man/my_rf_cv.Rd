@@ -12,6 +12,8 @@ This function performs a Random Forest Cross-Validation in R
 \details{
 @param k number of folds
 
+ @keywords inference
+
  @return a numeric with the cross-validation error;
 
  @examples
