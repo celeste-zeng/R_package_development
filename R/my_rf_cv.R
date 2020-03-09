@@ -1,19 +1,19 @@
-#'  Random Forest Cross-Validation Function
+#' Random Forest Cross-Validation Function
 #'
-#'  This function performs a Random Forest Cross-Validation in R
+#' This function performs a Random Forest Cross-Validation in R
 #'
-#'  @param k number of folds
+#' @param k number of folds
 #'
-#'  @keywords inference
+#' @keywords inference
 #'
-#'  @return a numeric with the cross-validation error;
+#' @return a numeric with the cross-validation error;
 #'
-#'  @examples
-#'  my_rf_cv(k = 5)
+#' @examples
+#' my_rf_cv(k = 5)
 #'
-#'  @import randomForest
+#' @import randomForest
 #'
-#'  @export
+#' @export
 my_rf_cv <- function(k) {
   train <- my_gapminder
   folds <- sample(rep(1:k, length = nrow(train)))
@@ -23,7 +23,7 @@ my_rf_cv <- function(k) {
     data_train <- train[folds != i, ]
     data_test <- train[folds == i, ]
     # train a random forest model with 100 trees
-    my_model <- randomForest(lifeExp ~ gdpPercap, data = data_train, ntree = 100)
+    my_model <- randomForest(lifeExp ~ gdpPercap, data = data_train, ntree = 50)
     # Record predictions
     prediction <- predict(my_model, data_test[, -1])
     # calculate the MSE

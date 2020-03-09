@@ -6,24 +6,24 @@
 \usage{
 my_knn_cv(train, cl, k_nn, k_cv)
 }
+\arguments{
+\item{train}{Input data frame to be validated}
+
+\item{cl}{true class value of the training data}
+
+\item{k_nn}{integer representing the number of neighbors}
+
+\item{k_cv}{integer representing the number of folds}
+}
+\value{
+a list with objects, which has class: a vector of the predicted class Y_i for all observations,
+and cv_err: a numeric with the cross-validation misclassification error;
+}
 \description{
 This function performs a k-Nearest Neighbors Cross-Validation in R
 }
-\details{
-@param train Input data frame to be validated
- @param cl true class value of the training data
- @param k_nn integer representing the number of neighbors
- @param k_cv integer representing the number of folds
+\examples{
+my_knn_cv(train = my_iris[, -5], cl = my_iris$Species, k_nn = 5, k_cv = 5)
 
- @keywords prediction
-
- @return a list with objects, which has class: a vector of the predicted class Y_i for all observations,
- and cv_err: a numeric with the cross-validation misclassification error;
-
- @examples
- my_knn_cv(train = my_iris[, -5], cl = my_iris$Species, k_nn = 5, k_cv = 5)
-
- @import class
-
- @export
 }
+\keyword{prediction}

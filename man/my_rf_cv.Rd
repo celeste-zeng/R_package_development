@@ -6,20 +6,17 @@
 \usage{
 my_rf_cv(k)
 }
+\arguments{
+\item{k}{number of folds}
+}
+\value{
+a numeric with the cross-validation error;
+}
 \description{
 This function performs a Random Forest Cross-Validation in R
 }
-\details{
-@param k number of folds
+\examples{
+my_rf_cv(k = 5)
 
- @keywords inference
-
- @return a numeric with the cross-validation error;
-
- @examples
- my_rf_cv(k = 5)
-
- @import randomForest
-
- @export
 }
+\keyword{inference}

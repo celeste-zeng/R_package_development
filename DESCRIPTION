@@ -16,7 +16,8 @@ Suggests:
     covr,
     knitr,
     rmarkdown
-Imports: class,
+Imports: 
+  class,
   magrittr,
   randomForest
 VignetteBuilder: knitr
