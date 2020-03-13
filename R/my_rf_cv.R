@@ -11,10 +11,11 @@
 #' @examples
 #' my_rf_cv(k = 5)
 #'
-#' @import randomForest
+#' @import randomForest stats
 #'
 #' @export
 my_rf_cv <- function(k) {
+  my_gapminder <- my_gapminder
   train <- my_gapminder
   folds <- sample(rep(1:k, length = nrow(train)))
   MSE <- rep(NA, k)
