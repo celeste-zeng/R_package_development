@@ -13,10 +13,24 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+## Introduction of this package: 
+This package is created as a class project for Stat302 in UW. It contains four formulas: my_t_test, my_lm, my_knn_cv, 
+and my_rf_cv. This package is collabrated by Celeste Zeng and Simona Liao
+
+## How to install the package from github:
+```{r, eval=FALSE}
+devtools::install_github("celestezeng33/Stat302package", build_vignette = TRUE, build_opts = c())
+library(Stat302package)
+# Use this to view the vignette in the Demo HTML help
+help(package = "Stat302package", help_type = "html")
+# Use this to view the vignette as an isolated HTML file
+utils::browseVignettes(package = "Stat302package")
+```
 
 ```{r setup}
 library(STAT302package)
 library(ggplot2)
+library(magrittr)
 ```
 A tutorial for the function my_knn_cv in the STAT302packgePredict 
 Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
@@ -48,4 +62,8 @@ tu_graph <- ggplot(data = tu,
        y = "Estimated MSE") + 
   theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
   scale_x_continuous(breaks = c(2, 5, 10)) 
+rf_vector <- c(mean(tu_rf[1 : 30, 2]), mean(tu_rf[31 : 60, 2]), mean(tu_rf[61 : 90, 2]), var(tu_rf[1 : 30, 2]),
+               var(tu_rf[31 : 60, 2]), var(tu_rf[61 : 90, 2]))
+rf_matrix <- matrix(rf_vector, nrow = 3, ncol = 2)
+rf_table <- data_frame("k_values" = c(2, 5, 10),"mean" = rf_matrix[, 1], "variance" = rf_matrix[, 2])
 ```

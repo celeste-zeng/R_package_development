@@ -15,7 +15,8 @@ Suggests:
     testthat (>= 2.1.0),
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
 Imports: 
   class,
   magrittr,
