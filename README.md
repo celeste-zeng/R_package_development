@@ -3,6 +3,10 @@
   [![Codecov test coverage](https://codecov.io/gh/celestezeng33/STAT302package/branch/master/graph/badge.svg)](https://codecov.io/gh/celestezeng33/STAT302package?branch=master)
 <!-- badges: end -->
 
+## Introduction of this package: 
+This package is created as a class project for Stat302 in UW. It contains four formulas: my_t_test, my_lm, my_knn_cv, 
+and my_rf_cv. This package is collabrated by Celeste Zeng and Simona Liao
+
 # install.packages("devtools")
 devtools::install_github("celestezeng33/STAT302package")
 library(STAT302package)
@@ -12,3 +16,9 @@ help(package = "STAT302package", help_type = "html")
 
 # Use this to view the vignette as an isolated HTML file
 utils::browseVignettes(package = "STAT302package")
+
+## Introduction of this package: 
+This package is created as a class project for Stat302 in UW. It contains four formulas: my_t_test, my_lm, my_knn_cv, 
+and my_rf_cv. This package is collabrated by Celeste Zeng and Simona Liao
+
+
