@@ -4,7 +4,7 @@
 #'
 #' @param k number of folds
 #'
-#' @keywords inference
+#' @keywords prediction
 #'
 #' @return a numeric with the cross-validation error;
 #'

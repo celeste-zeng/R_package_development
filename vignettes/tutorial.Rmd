@@ -18,9 +18,92 @@ knitr::opts_chunk$set(
 library(STAT302package)
 library(ggplot2)
 library(magrittr)
+library(tidyverse)
 ```
-A tutorial for the function my_knn_cv in the STAT302packgePredict 
-Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
+## 1. Introduction
+
+This package is created as a class project for Stat302 in UW. It contains four formulas: `my_t_test`, `my_lm`, `my_knn_cv`, and `my_rf_cv``.
+This package is collabrated by Celeste Zeng and Simona Liao.
+
+Install the package using:
+```{r, eval = FALSE}
+devtools::install_github("celestezeng33/Stat302package", build_vignette = TRUE, build_opts = c())
+library(Stat302Package)
+# Use this to view the vignette in the Demo HTML help
+help(package = "Stat302package", help_type = "html")
+# Use this to view the vignette as an isolated HTML file
+utils::browseVignettes(package = "Stat302package")
+```
+
+## 2. Tutorial For `my_t.test`
+All the tests demonstrated below use `lifeExp` data from `my_gapminder`.
+
+### case I: alternative = "two.sided"
+  \begin{align}
+  H_0: \mu &= 60,\\
+  H_a: \mu &\neq 60.
+  \end{align}
+```{r}
+data("my_gapminder")
+my_t_test(my_gapminder$lifeExp, mu = 60, alternative = "two.sided")
+```
+From the test result, we can know that the p_value is greater than 0.05. So the result is not statistically significant and we do not have enough evidence to reject the null hypothesis, H_0.
+
+### case II: alternative = "less"
+  \begin{align}
+  H_0: \mu &= 60,\\
+  H_a: \mu &< 60.
+  \end{align}
+```{r}
+my_t_test(my_gapminder$lifeExp, mu = 60, alternative = "less")
+```
+From the test result, we can know that the p_value is less than 0.05. So the result is statistically significant and we have sufficient evidence to reject the null hypothesis, H_0.
+
+### case III: alternative = "greater"
+  \begin{align}
+  H_0: \mu &= 60,\\
+  H_a: \mu &> 60.
+  \end{align}
+```{r}
+my_t_test(my_gapminder$lifeExp, mu = 60, alternative = "greater")
+```
+From the test result, we can know that the p_value is greater than 0.05. So the result is not statistically significant and we do not have enough evidence to reject the null hypothesis, H_0.
+
+##3. Tutorial for `my_lm`
+```{r}
+test <- my_lm(my_fml = lifeExp ~ gdpPercap + continent, my_data = my_gapminder)
+estimate <- test[2, 1]
+p_val <- test[2, 4]
+test
+```
+From the statistics above, we know that the expected difference in the response `lifeExp` between two observations differing by one unit in `gdpPercap`, with all other covariates identical, is `r estimate`. Comparing to the coeffiecients of different continents, differences in `gdpPercap` have less influence on `lifeExp` than differences in `continent`.
+
+Now, we will do a two sided hypothesis test associated with the `gdpPercap` coefficient. The null hypothesis is that there will be no significant prediction of `lifeExp` by `gdpPercap`.
+
+  \begin{align}
+  H_0: \beta &= 0,\\
+  H_a: \beta &\neq 0.
+  \end{align}
+
+The p-value for the hypothesis test is `r p_val`, which is smaller than 0.05. The result is statistically significant and we have sufficient evidence to reject the null hypothesis. There will be significant prediction of `lifeExp` by `gdpPercap`.
+  
+```{r}
+my_coef <- test[, 1]
+my_matrix <- model.matrix(lifeExp ~ gdpPercap + continent, data = my_gapminder)
+y_hat <- my_matrix %*% as.matrix(my_coef)
+my_df <- data.frame("actual" = my_gapminder$lifeExp, "fitted" = y_hat, "continent" = my_gapminder$continent)
+ ggplot(my_df, aes(x = actual, y = fitted, color = continent)) +
+   geom_point() +
+   geom_abline(slope = 1, intercept = 0, col = "black") + 
+   theme_bw(base_size = 15) +
+   labs(x = "Fitted values", y = "Actual values", title = "Actual vs. Fitted") + 
+   theme(plot.title = element_text(hjust = 0.5))
+```
+
+From the graph of actual values and fitted values above, we can find out that this model is very inaccurate in the prediction of countries in Africa. But it did a good job of predicting the life expectancy in European countries.
+
+##4. Tutorial for `my_knn_cv` 
+Predict Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
 
 ```{r}
 tu_knn <- my_knn_cv(train = my_gapminder[, 3 : 4], 

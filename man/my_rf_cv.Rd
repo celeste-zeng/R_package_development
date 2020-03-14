@@ -19,4 +19,4 @@ This function performs a Random Forest Cross-Validation in R
 my_rf_cv(k = 5)
 
 }
-\keyword{inference}
+\keyword{prediction}

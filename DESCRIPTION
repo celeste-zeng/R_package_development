@@ -17,7 +17,8 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    tidyverse
 Imports: 
   class,
   magrittr,
