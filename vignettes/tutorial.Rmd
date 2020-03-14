@@ -103,13 +103,34 @@ my_df <- data.frame("actual" = my_gapminder$lifeExp, "fitted" = y_hat, "continen
 From the graph of actual values and fitted values above, we can find out that this model is very inaccurate in the prediction of countries in Africa. But it did a good job of predicting the life expectancy in European countries.
 
 ##4. Tutorial for `my_knn_cv` 
-Predict Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
 
+Predict Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
 ```{r}
-tu_knn <- my_knn_cv(train = my_gapminder[, 3 : 4], 
-          cl = my_gapminder$continent, k_nn = 10, k_cv = 5)
+# For each value of k_nn, record the training misclassification rate and the CV misclassification rate
+knn_vector <- c(1 : 10)
+tu_knn <- matrix(NA, nrow = 10, ncol = 3)
+for (i in 1 : 10) {
+  tu_knn[i, 1] <- knn_vector[i]
+  # get the cv misclassification rate
+  tu_knn[i, 3] <- my_knn_cv(train = my_gapminder[, 3 : 4], 
+          cl = my_gapminder$continent, k_nn = knn_vector[i], k_cv = 5)$cv_err
+  prediction <- my_knn_cv(train = my_gapminder[, 3 : 4], 
+          cl = my_gapminder$continent, k_nn = knn_vector[i], k_cv = 5)$class
+  # get tge training misclassification rate
+  tu_knn[i, 2] <- sum(prediction != my_gapminder$continent) / length(my_gapminder$continent)
+}
+tu_knn <- data.frame("k_nn" = tu_knn[, 1], "training_misclassification_rate" = tu_knn[, 2], 
+                     "CV_misclassification_rate" = tu_knn[, 3])
+# I will use k_nn = 1 model you would choose based on the training misclassification rates; and I will use # k_nn = 10 based on the CV misclassification rates; I will use cross-validation to identify 
+# k with the minimum test error and choose it as my k_nn(which is 10) because it is a great tool to choose 
+# values for tuning parameters across a number of algorithms, not just 
+# k-nearest neighbors
+
 ```
 
+##5. Tutorial for `my_rf_cv`
+
+Predict lifeExp using covariate gdpPercap.
 ```{r}
 k_vector <- c(2, 5, 10)
 tu_rf <- matrix(NA, nrow = 90, ncol = 2)
@@ -120,7 +141,7 @@ for (i in 1 : length(k_vector)) {
   }
 }
 ```
-
+Use boxplots to display data: a boxplot is associated with a k-value(2,5,10), representing 30 simulations each
 ```{r}
 tu <- data.frame("K_value" = tu_rf[, 1], "MSE" = tu_rf[, 2])
 tu_graph <- ggplot(data = tu,
@@ -132,8 +153,13 @@ tu_graph <- ggplot(data = tu,
        y = "Estimated MSE") + 
   theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
   scale_x_continuous(breaks = c(2, 5, 10)) 
-rf_vector <- c(mean(tu_rf[1 : 30, 2]), mean(tu_rf[31 : 60, 2]), mean(tu_rf[61 : 90, 2]), var(tu_rf[1 : 30, 2]),
-               var(tu_rf[31 : 60, 2]), var(tu_rf[61 : 90, 2]))
+rf_vector <- c(mean(tu_rf[1 : 30, 2]), mean(tu_rf[31 : 60, 2]), mean(tu_rf[61 : 90, 2]), sd(tu_rf[1 : 30, 2]),
+               sd(tu_rf[31 : 60, 2]), sd(tu_rf[61 : 90, 2]))
 rf_matrix <- matrix(rf_vector, nrow = 3, ncol = 2)
-rf_table <- data.frame("k_values" = c(2, 5, 10),"mean" = rf_matrix[, 1], "variance" = rf_matrix[, 2])
+tu_graph
+# Use a table to display the average CV estimate and the standard deviation of the CV estimates across  k
+rf_table <- data.frame("k_values" = c(2, 5, 10),"mean" = rf_matrix[, 1], "sd" = rf_matrix[, 2])
+# Results of observation: as k gets bigger the means of CV estimation also get bigger, but the standard 
+# deviations get smaller. Also, the ranges of CV estimates also get smaller as k gets bigger.
+# 
 ```
