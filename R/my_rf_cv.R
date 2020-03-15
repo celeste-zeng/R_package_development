@@ -23,10 +23,10 @@ my_rf_cv <- function(k) {
     # define training data as all the data not in the ith fold
     data_train <- train[folds != i, ]
     data_test <- train[folds == i, ]
-    # train a random forest model with 100 trees
+    # train a random forest model with 5dev0 trees
     my_model <- randomForest(lifeExp ~ gdpPercap, data = data_train, ntree = 50)
     # Record predictions
-    prediction <- predict(my_model, data_test[, -1])
+    prediction <- predict(my_model, data_test[, -4])
     # calculate the MSE
     MSE[i] <- mean((data_test$lifeExp - prediction)^2)
   }
