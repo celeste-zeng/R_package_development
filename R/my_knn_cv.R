@@ -9,7 +9,7 @@
 #'
 #' @keywords prediction
 #'
-#' @return a list with objects, which has class: a vector of the predicted class Y_i for all observations,
+#' @return a list with objects, which has class: a vector of the predicted class ^Y_i for all observations,
 #' and cv_err: a numeric with the cross-validation misclassification error;
 #'
 #' @examples

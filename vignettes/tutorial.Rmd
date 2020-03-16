@@ -121,11 +121,12 @@ for (i in 1 : 10) {
 }
 tu_knn <- data.frame("k_nn" = tu_knn[, 1], "training_misclassification_rate" = tu_knn[, 2], 
                      "CV_misclassification_rate" = tu_knn[, 3])
-# I will use k_nn = 1 model you would choose based on the training misclassification rates; and I will use # k_nn = 10 based on the CV misclassification rates; I will use cross-validation to identify 
-# k with the minimum test error and choose it as my k_nn(which is 10) because it is a great tool to choose 
-# values for tuning parameters across a number of algorithms, not just 
-# k-nearest neighbors
-
+# I will use k_nn = 1 model you would choose based on the training misclassification rates; and I will use # k_nn = 10 based on the CV misclassification rates; 
+# I will use cross-validation to identify optimal k and 
+# choose it as my k_nn(which is 10) because CV splits data into 
+# k folds to use as much data as possible to train the model while still having out-of-sample test data. 
+# CV is a great tool to choose values for tuning parameters across a number of algorithms, not just 
+# k-nearest neighbors.
 ```
 
 ##5. Tutorial for `my_rf_cv`
@@ -137,11 +138,12 @@ tu_rf <- matrix(NA, nrow = 90, ncol = 2)
 for (i in 1 : length(k_vector)) {
   for (j in 1 : 30) {
     tu_rf[(i - 1) * 30 + j, 1] <- k_vector[i]
-    tu_rf[(i - 1) * 30 + j, 2] <- my_rf_cv(k = k_vector[i])
+    tu_rf[(i - 1) * 30 + j, 2] <- my_rf_cv(k_vector[i])
   }
 }
 ```
-Use boxplots to display data: a boxplot is associated with a k-value(2,5,10), representing 30 simulations each
+Use boxplots to display data: a boxplot is associated with a k-value(2,5,10),
+representing 30 simulations each
 ```{r}
 tu <- data.frame("K_value" = tu_rf[, 1], "MSE" = tu_rf[, 2])
 tu_graph <- ggplot(data = tu,
@@ -154,14 +156,16 @@ tu_graph <- ggplot(data = tu,
   theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
   scale_x_continuous(breaks = c(2, 5, 10)) 
 rf_vector <- c(mean(tu_rf[1 : 30, 2]), mean(tu_rf[31 : 60, 2]), mean(tu_rf[61 : 90, 2]), sd(tu_rf[1 : 30, 2]), sd(tu_rf[31 : 60, 2]), sd(tu_rf[61 : 90, 2]))
-rf_vector
 rf_matrix <- matrix(rf_vector, nrow = 3, ncol = 2)
-tu_graph
 # Use a table to display the average CV estimate and the standard deviation of the CV estimates across k
 rf_table <- data.frame("k_values" = c(2, 5, 10),"mean" = rf_matrix[, 1], "sd" = rf_matrix[, 2])
+
 # Results of observation: as k gets bigger the means of CV estimation also get bigger, but the standard 
 # deviations get smaller. Also, the ranges of CV estimates also get smaller as k gets bigger.
-# Reasoning: Larger K means less bias towards overestimating the true expected error (as training folds 
-# will be closer to the total dataset) but higher variance and higher running time (as you are getting 
-# closer to the limit case: Leave-One-Out CV)
+# According to the Bias-Variance Tradeoff, larger K means less bias towards overestimating the true 
+# expected error (as training folds will be closer to the total dataset) but higher variance and higher 
+# running time (as I am getting closer to the limit case: Leave-One-Out CV);
+# Although the results of rf_table shows decreasing standard deviation/variance, it is because Variance of # cross-validation is more u-shaped than linearly increasing. Decreases at first because I am taking the 
+# average of more trials (the number of folds). It increases later because as k approaches n, the folds 
+# become highly correlated. If I add a k-value of 100, the standard deviation/variance will be larger.
 ```
