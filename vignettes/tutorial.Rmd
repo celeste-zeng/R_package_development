@@ -28,12 +28,12 @@ This package is collabrated by Celeste Zeng and Simona Liao.
 
 Install the package using:
 ```{r, eval = FALSE}
-devtools::install_github("celestezeng33/Stat302package", build_vignette = TRUE, build_opts = c())
-library(Stat302Package)
+devtools::install_github("celestezeng33/STAT302package", build_vignette = TRUE, build_opts = c())
+library(STAT302package)
 # Use this to view the vignette in the Demo HTML help
-help(package = "Stat302package", help_type = "html")
+help(package = "STAT302package", help_type = "html")
 # Use this to view the vignette as an isolated HTML file
-utils::browseVignettes(package = "Stat302package")
+utils::browseVignettes(package = "STAT302package")
 ```
 
 ## 2. Tutorial For `my_t.test`

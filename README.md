@@ -12,8 +12,8 @@ To download the Stat302 package, use the code below.
 
 ```r
 # install.packages("devtools")
-devtools::install_github("celestezeng33/Stat302package")
-library(Stat302package)
+devtools::install_github("celestezeng33/STAT302package")
+library(STAT302package)
 ```
 
 # Use
@@ -22,10 +22,10 @@ The vignette demonstrates example usage of all main functions. You can see the v
 ```r
 # install.packages("devtools")
 devtools::install_github("celestezeng33/Stat302package", build_vignette = TRUE, build_opts = c())
-library(Stat302package)
+library(STAT302package)
 # Use this to view the vignette in the Demo HTML help
-help(package = "Stat302package", help_type = "html")
+help(package = "STAT302package", help_type = "html")
 # Use this to view the vignette as an isolated HTML file
-utils::browseVignettes(package = "Stat302package")
+utils::browseVignettes(package = "STAT302package")
 ```
 
