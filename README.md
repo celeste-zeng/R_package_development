@@ -21,7 +21,7 @@ The vignette demonstrates example usage of all main functions. You can see the v
 
 ```r
 # install.packages("devtools")
-devtools::install_github("celestezeng33/Stat302package", build_vignette = TRUE, build_opts = c())
+devtools::install_github("celestezeng33/STAT302package", build_vignette = TRUE, build_opts = c())
 library(STAT302package)
 # Use this to view the vignette in the Demo HTML help
 help(package = "STAT302package", help_type = "html")
