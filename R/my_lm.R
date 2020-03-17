@@ -5,7 +5,7 @@
 #' @param my_fml 'formula' class object.
 #' @param my_data Input data frame.
 #'
-#' @keywords inference
+#' @keywords prediction
 #'
 #' @return A table of coeffiencts for the linear regression, which contains `Estimate`, `Std. Error`, `t value`, and `Pr(>|t|)`.
 #'

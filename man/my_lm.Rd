@@ -22,4 +22,4 @@ data(my_gapminder)
 my_lm(my_fml = pop ~ gdpPercap, my_data = my_gapminder)
 
 }
-\keyword{inference}
+\keyword{prediction}
