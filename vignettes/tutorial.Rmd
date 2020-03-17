@@ -1,5 +1,6 @@
 ---
 title: "Project 3: STAT302package Tutorial"
+author: "Simona Liao, Celeste Zeng"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Project 3: STAT302package Tutorial}
@@ -44,6 +45,7 @@ All the tests demonstrated below use `lifeExp` data from `my_gapminder`.
   H_a: \mu &\neq 60.
   \end{align}
 ```{r}
+# To begin, we load our example data set `my_gapminder`
 data("my_gapminder")
 my_t_test(my_gapminder$lifeExp, mu = 60, alternative = "two.sided")
 ```
@@ -104,7 +106,7 @@ From the graph of actual values and fitted values above, we can find out that th
 
 ##4. Tutorial for `my_knn_cv` 
 
-Predict Using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
+Predict using the my_gapminder dataset, we predict output class continent using covariates gdpPercap and lifeExp by utilizing 5-fold cross validation (k_cv = 5).
 ```{r}
 # For each value of k_nn, record the training misclassification rate and the CV misclassification rate
 knn_vector <- c(1 : 10)
@@ -121,17 +123,17 @@ for (i in 1 : 10) {
 }
 tu_knn <- data.frame("k_nn" = tu_knn[, 1], "training_misclassification_rate" = tu_knn[, 2], 
                      "CV_misclassification_rate" = tu_knn[, 3])
-# I will use k_nn = 1 model you would choose based on the training misclassification rates; and I will use # k_nn = 10 based on the CV misclassification rates; 
-# I will use cross-validation to identify optimal k and 
-# choose it as my k_nn(which is 10) because CV splits data into 
-# k folds to use as much data as possible to train the model while still having out-of-sample test data. 
-# CV is a great tool to choose values for tuning parameters across a number of algorithms, not just 
-# k-nearest neighbors.
 ```
+I will use k_nn = 1 model you would choose based on the training misclassification rates; and I will use # k_nn = 10 based on the CV misclassification rates; 
+I will use cross-validation to identify optimal k and 
+choose it as my k_nn(which is 10) because CV splits data into 
+k folds to use as much data as possible to train the model while still having out-of-sample test data. 
+CV is a great tool to choose values for tuning parameters across a number of algorithms, not just 
+k-nearest neighbors.
 
 ##5. Tutorial for `my_rf_cv`
 
-Predict lifeExp using covariate gdpPercap.
+Using the my_gapminder dataset, predict lifeExp using covariate gdpPercap and get the cv MSE.
 ```{r}
 k_vector <- c(2, 5, 10)
 tu_rf <- matrix(NA, nrow = 90, ncol = 2)
@@ -142,8 +144,9 @@ for (i in 1 : length(k_vector)) {
   }
 }
 ```
+
 Use boxplots to display data: a boxplot is associated with a k-value(2,5,10),
-representing 30 simulations each
+representing 30 simulations each.
 ```{r}
 tu <- data.frame("K_value" = tu_rf[, 1], "MSE" = tu_rf[, 2])
 tu_graph <- ggplot(data = tu,
@@ -159,13 +162,13 @@ rf_vector <- c(mean(tu_rf[1 : 30, 2]), mean(tu_rf[31 : 60, 2]), mean(tu_rf[61 : 
 rf_matrix <- matrix(rf_vector, nrow = 3, ncol = 2)
 # Use a table to display the average CV estimate and the standard deviation of the CV estimates across k
 rf_table <- data.frame("k_values" = c(2, 5, 10),"mean" = rf_matrix[, 1], "sd" = rf_matrix[, 2])
-
-# Results of observation: as k gets bigger the means of CV estimation also get bigger, but the standard 
-# deviations get smaller. Also, the ranges of CV estimates also get smaller as k gets bigger.
-# According to the Bias-Variance Tradeoff, larger K means less bias towards overestimating the true 
-# expected error (as training folds will be closer to the total dataset) but higher variance and higher 
-# running time (as I am getting closer to the limit case: Leave-One-Out CV);
-# Although the results of rf_table shows decreasing standard deviation/variance, it is because Variance of # cross-validation is more u-shaped than linearly increasing. Decreases at first because I am taking the 
-# average of more trials (the number of folds). It increases later because as k approaches n, the folds 
-# become highly correlated. If I add a k-value of 100, the standard deviation/variance will be larger.
 ```
+Results of observation: as k gets bigger the means of CV estimation also get bigger, but the standard 
+deviations get smaller. Also, the ranges of CV estimates also get smaller as k gets bigger.
+According to the Bias-Variance Tradeoff, larger K means less bias towards overestimating the true 
+expected error (as training folds will be closer to the total dataset) but higher variance and higher 
+running time (as I am getting closer to the limit case: Leave-One-Out CV);
+Although the results of rf_table shows decreasing standard deviation/variance, it is because Variance of # cross-validation is more u-shaped than linearly increasing. Decreases at first because I am taking the 
+average of more trials (the number of folds). It increases later because as k approaches n, the folds 
+become highly correlated. If I add a k-value of 100, the standard deviation/variance will be larger.
+
